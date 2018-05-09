@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>6de6a163-0eef-4e35-b42b-4e521602a207</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>NeuralSnake2.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,19 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="NeuralSnake2.py" />
+    <Compile Include="core.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\window.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="main.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="C:\Users\Pawel\Desktop\GitHub\NeuralSnake-2\NeuralSnake2\GUI\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
