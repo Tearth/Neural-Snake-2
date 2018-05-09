@@ -24,6 +24,12 @@
     <Compile Include="core.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GUI\board.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\field.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GUI\window.py">
       <SubType>Code</SubType>
     </Compile>
