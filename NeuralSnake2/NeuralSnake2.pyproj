@@ -27,9 +27,6 @@
     <Compile Include="GUI\window.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GUI\__init__.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="main.py" />
   </ItemGroup>
   <ItemGroup>

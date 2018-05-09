@@ -1,5 +1,5 @@
 import sys;
-sys.path.insert(0, "GUI")
+sys.path.append("GUI")
 
 from core import *
 
