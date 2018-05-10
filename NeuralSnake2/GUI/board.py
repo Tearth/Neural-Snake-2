@@ -8,3 +8,6 @@ class Board(object):
         self._fields = [Field.NONE] * width
         for i in range(self._width):
             self._fields[i] = [Field.NONE] * height
+
+    def draw(self, canvas):
+        canvas.delete("all")
