@@ -2,7 +2,7 @@ from tkinter import *
 from random import randint
 
 class Window(object):
-    def __init__(self, fps):
+    def __init__(self, board, fps):
         self._root = Tk()
         self._root.title("NeuralNetwork 2")
         self._root.geometry("600x400")
@@ -20,16 +20,17 @@ class Window(object):
         self._currentFps = 0
         self._fpsCounter = 0
 
+        self._board = board
+
     def run(self):
-        self._root.after(0, self.update)
-        self._root.after(0, self.updateFps)
+        self._root.after(100, self.update)
+        self._root.after(100, self.updateFps)
         self._root.mainloop()
         
     def update(self):
         self._fpsCounter += 1
 
-        self._canvas.delete("all")
-        self._canvas.create_line(0,0,200,randint(0, 400), fill="red")
+        self._board.draw(self._canvas)
         self._root.after(self._refreshTime, self.update)
 
     def updateFps(self):
