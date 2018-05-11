@@ -1,3 +1,4 @@
+from copy import *
 from field import *
 from random import *
 from constants import *
@@ -28,6 +29,8 @@ class Game(object):
     def initSnake(self):
         self._head = self.getRandomPosition() 
         self.boardfields[self._head.x][self._head.y] = Field.HEAD
+
+        self._body = []
         
     def initFood(self):
         for i in range(Constants.FOOD_COUNT):
@@ -46,7 +49,17 @@ class Game(object):
         if not self.checkIfMoveIsLegal(nextPosition):
             self.running = False
         else:
-            self.boardfields[self._head.x][self._head.y] = Field.NONE
+            if self.boardfields[nextPosition.x][nextPosition.y] == Field.FOOD:
+                self.addFood()
+
+            self.boardfields[self._head.x][self._head.y] = Field.BODY
+            self._body.append(deepcopy(self._head))
+
+            if not self.boardfields[nextPosition.x][nextPosition.y] == Field.FOOD:
+                lastBodyPart = self._body[0]
+                self.boardfields[lastBodyPart.x][lastBodyPart.y] = Field.NONE
+                self._body.remove(lastBodyPart)
+
             self.boardfields[nextPosition.x][nextPosition.y] = Field.HEAD
             self._head = nextPosition
 
@@ -59,7 +72,7 @@ class Game(object):
                 foodPositionFound = True
 
     def getRandomPosition(self):
-        return vector2d(randint(1, Constants.BOARD_WIDTH - 1), randint(1, Constants.BOARD_HEIGHT - 2))
+        return vector2d(randint(1, Constants.BOARD_WIDTH - 2), randint(1, Constants.BOARD_HEIGHT - 2))
 
     def checkIfMoveIsLegal(self, nextPosition):
         field = self.boardfields[nextPosition.x][nextPosition.y]
