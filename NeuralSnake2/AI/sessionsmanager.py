@@ -2,6 +2,7 @@ from time import *
 from threading import *
 from session import *
 from constants import *
+from direction import *
 
 class SessionsManager(Thread):
     def __init__(self):
@@ -19,6 +20,7 @@ class SessionsManager(Thread):
 
     def run(self):
         while self.running:
+            self._sessions[0].game.nextTurn(Direction.UP)
             sleep(self._refreshInterval)
 
     def getBoardState(self, boardIndex):

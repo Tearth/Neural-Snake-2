@@ -45,6 +45,9 @@
     <Compile Include="GUI\window.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\direction.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Helpers\vector2d.py">
       <SubType>Code</SubType>
     </Compile>

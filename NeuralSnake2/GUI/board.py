@@ -46,7 +46,7 @@ class Board(object):
                 rectId = self._objects["{0}|{1}".format(x, y)]
 
                 if(color != canvas.itemcget(rectId, "fill")):
-                    self._canvas.itemconfig(rect, fill=color)
+                    canvas.itemconfig(rectId, fill=color)
 
         self._needToUpdate = False
 

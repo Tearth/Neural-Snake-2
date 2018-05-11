@@ -4,7 +4,7 @@ class Constants(object):
 
     FPS = 30
 
-    SESSIONS_COUNT = 10
-    SESSION_REFRESH_INTERVAL = 100
+    SESSIONS_COUNT = 1
+    SESSION_REFRESH_INTERVAL = 250
 
     FOOD_COUNT = 3
