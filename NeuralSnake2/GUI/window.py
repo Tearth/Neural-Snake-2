@@ -1,8 +1,10 @@
 from tkinter import *
-from random import randint
+from random import *
+from constants import *
 
 class Window(object):
-    def __init__(self, board, fps):
+    def __init__(self):
+
         self._root = Tk()
         self._root.title("NeuralNetwork 2")
         self._root.geometry("600x400")
@@ -15,11 +17,13 @@ class Window(object):
         self._fpsLabel = Label(self._root, text="FPS: 0", textvariable=self._fpsText)
         self._fpsLabel.pack()
 
-        self._refreshTime = int(1000 / fps)
-        self._expectedFps = fps
+        self._refreshTime = int(1000 / Constants.FPS)
         self._currentFps = 0
         self._fpsCounter = 0
 
+        self._board = None
+
+    def setBoard(self, board):
         self._board = board
 
     def run(self):
@@ -28,10 +32,11 @@ class Window(object):
         self._root.mainloop()
         
     def update(self):
+        self._root.after(self._refreshTime, self.update)
         self._fpsCounter += 1
 
-        self._board.draw(self._canvas)
-        self._root.after(self._refreshTime, self.update)
+        if(self._board != None):
+            self._board.draw(self._canvas)
 
     def updateFps(self):
         self._root.after(1000, self.updateFps)

@@ -1,0 +1,8 @@
+class Constants(object):
+    BOARD_WIDTH = 20
+    BOARD_HEIGHT = 20
+
+    FPS = 30
+
+    SESSIONS_COUNT = 10
+    SESSION_REFRESH_INTERVAL = 100

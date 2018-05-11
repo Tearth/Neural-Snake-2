@@ -21,6 +21,18 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AI\game.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AI\session.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AI\sessionsmanager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="constants.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="core.py">
       <SubType>Code</SubType>
     </Compile>
@@ -37,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="C:\Users\Pawel\Desktop\GitHub\NeuralSnake-2\NeuralSnake2\GUI\" />
+    <Folder Include="AI\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

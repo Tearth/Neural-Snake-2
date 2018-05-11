@@ -1,11 +1,17 @@
 import sys;
+sys.path.append("AI")
 sys.path.append("GUI")
 
+from window import *
 from core import *
 
 def main():
-    core = Core()
-    core.run()
+    window = Window()
+    core = Core(window)
+
+    core.start()
+    window.run()
+    core.stop()
 
 if __name__ == "__main__":
     main()
