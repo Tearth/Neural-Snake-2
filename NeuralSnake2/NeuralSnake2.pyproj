@@ -45,11 +45,15 @@
     <Compile Include="GUI\window.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\vector2d.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="main.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="C:\Users\Pawel\Desktop\GitHub\NeuralSnake-2\NeuralSnake2\GUI\" />
     <Folder Include="AI\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
