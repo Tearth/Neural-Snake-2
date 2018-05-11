@@ -8,6 +8,7 @@ from direction import *
 class Game(object):
     def __init__(self):
         self.running = True
+        self._hunger = Constants.HUNGER_LIMIT
 
         self.boardfields = [Field.NONE] * Constants.BOARD_WIDTH
         for i in range(Constants.BOARD_WIDTH):
@@ -46,11 +47,12 @@ class Game(object):
         elif direction == Direction.DOWN:   nextPosition += vector2d(0, 1)
         elif direction == Direction.LEFT:   nextPosition += vector2d(-1, 0)
 
-        if not self.checkIfMoveIsLegal(nextPosition):
+        if not self.checkIfMoveIsLegal(nextPosition) or self._hunger <= 0:
             self.running = False
         else:
             if self.boardfields[nextPosition.x][nextPosition.y] == Field.FOOD:
                 self.addFood()
+                self._hunger = Constants.HUNGER_LIMIT
 
             self.boardfields[self._head.x][self._head.y] = Field.BODY
             self._body.append(deepcopy(self._head))
@@ -59,6 +61,8 @@ class Game(object):
                 lastBodyPart = self._body[0]
                 self.boardfields[lastBodyPart.x][lastBodyPart.y] = Field.NONE
                 self._body.remove(lastBodyPart)
+
+                self._hunger -= 1
 
             self.boardfields[nextPosition.x][nextPosition.y] = Field.HEAD
             self._head = nextPosition
@@ -73,6 +77,9 @@ class Game(object):
 
     def getRandomPosition(self):
         return vector2d(randint(1, Constants.BOARD_WIDTH - 2), randint(1, Constants.BOARD_HEIGHT - 2))
+
+    def getSnakeLength(self):
+        return len(self._body) + 1
 
     def checkIfMoveIsLegal(self, nextPosition):
         field = self.boardfields[nextPosition.x][nextPosition.y]

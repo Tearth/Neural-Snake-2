@@ -8,3 +8,4 @@ class Constants(object):
     SESSION_REFRESH_INTERVAL = 250
 
     FOOD_COUNT = 30
+    HUNGER_LIMIT = 3
