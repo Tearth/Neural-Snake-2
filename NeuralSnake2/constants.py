@@ -6,3 +6,5 @@ class Constants(object):
 
     SESSIONS_COUNT = 10
     SESSION_REFRESH_INTERVAL = 100
+
+    FOOD_COUNT = 3

@@ -1,6 +1,7 @@
 import sys;
 sys.path.append("AI")
 sys.path.append("GUI")
+sys.path.append("Helpers")
 
 from window import *
 from core import *
