@@ -1,14 +1,11 @@
 from threading import *
-from board import *
 from sessionsmanager import *
 
 class Core(Thread):
     def __init__(self, window):
         super().__init__()
 
-        self._board = Board()
         self._window = window
-        self._window.setBoard(self._board)
         
         self._refreshTime = int(1000 / Constants.FPS)
         self._sessionsManager = SessionsManager()
@@ -20,7 +17,8 @@ class Core(Thread):
 
     def update(self):
         self._window._root.after(self._refreshTime, self.update)
-        self._board.update(self._sessionsManager.getBoardState(0))
+        self._window.updateBoard(self._sessionsManager.getBoardState(0))
+        self._window.updateSessionInfo(self._sessionsManager.getSessionInfo(0))
 
     def stop(self):
         self._sessionsManager.stop()

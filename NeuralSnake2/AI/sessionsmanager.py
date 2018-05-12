@@ -27,5 +27,8 @@ class SessionsManager(Thread):
     def getBoardState(self, boardIndex):
         return self._sessions[boardIndex].getBoardState()
 
+    def getSessionInfo(self, boardIndex):
+        return self._sessions[boardIndex].getSessionInfo()
+
     def stop(self):
         self.running = False

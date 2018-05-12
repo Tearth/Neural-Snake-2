@@ -10,6 +10,9 @@ class Session(object):
     def initNetwork(self):
         self._input =  tf.placeholder("float", [None, Constants.INPUT_NEURONS_COUNT],  name="input_data")
         self._output = tf.placeholder("float", [None, Constants.OUTPUT_NEURONS_COUNT], name="output_data")
+        
+        self._lastInput = []
+        self._lastOutput = []
 
         self._weights = {
             'input_weights':  tf.Variable(tf.random_normal([Constants.INPUT_NEURONS_COUNT,  Constants.INPUT_NEURONS_COUNT]),  name="input_weights"),
@@ -43,8 +46,17 @@ class Session(object):
         direction = output_values.argmax()
         self._game.nextTurn(Direction(direction))
 
+        self._lastInput = input_values
+        self._lastOutput = output_values
+
     def getBoardState(self):
         return self._game.boardfields
+
+    def getSessionInfo(self):
+        return {
+            'input': self._lastInput,
+            'output': self._lastOutput
+        }
 
     def isRunning(self):
         return self._game.running

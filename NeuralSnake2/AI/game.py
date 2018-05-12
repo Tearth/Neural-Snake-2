@@ -42,9 +42,9 @@ class Game(object):
 
         nextPosition = self._head
 
-        if   direction == Direction.UP:     nextPosition += vector2d(0, -1)
+        if   direction == Direction.TOP:    nextPosition += vector2d(0, -1)
         elif direction == Direction.RIGHT:  nextPosition += vector2d(1, 0)
-        elif direction == Direction.DOWN:   nextPosition += vector2d(0, 1)
+        elif direction == Direction.BOTTOM: nextPosition += vector2d(0, 1)
         elif direction == Direction.LEFT:   nextPosition += vector2d(-1, 0)
 
         if not self.checkIfMoveIsLegal(nextPosition) or self._hunger <= 0:

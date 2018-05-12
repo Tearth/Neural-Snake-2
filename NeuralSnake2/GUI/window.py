@@ -1,4 +1,5 @@
 from tkinter import *
+from board import *
 from random import *
 from constants import *
 
@@ -10,21 +11,34 @@ class Window(object):
         self._root.geometry("600x400")
         self._root.resizable(False, False)
 
-        self._canvas = Canvas(self._root, width=400, height=400, bg="white")
-        self._canvas.pack(side="left")
+        self._canvas = Canvas(self._root, width=395, height=395, bg="white")
+        self._canvas.grid(column=0,row=0,sticky=N,rowspan=100)
 
         self._fpsText = StringVar()
-        self._fpsLabel = Label(self._root, text="FPS: 0", textvariable=self._fpsText)
-        self._fpsLabel.pack()
+        self._fpsLabel = Label(self._root, textvariable=self._fpsText,anchor="center",width="25")
+        self._fpsLabel.grid(column=1,row=0,columnspan=2,sticky=N)
+
+        self._inputTopText = StringVar()
+        self._inputTopLabel = Label(self._root, textvariable=self._inputTopText)
+        self._inputTopLabel.grid(column=1,row=1,sticky=N+W)
+
+        self._inputRightText = StringVar()
+        self._inputRightLabel = Label(self._root, textvariable=self._inputRightText)
+        self._inputRightLabel.grid(column=1,row=2,sticky=N+W)
+
+        self._inputBottomText = StringVar()
+        self._inputBottomLabel = Label(self._root, textvariable=self._inputBottomText)
+        self._inputBottomLabel.grid(column=1,row=3,sticky=N+W)
+
+        self._inputLeftText = StringVar()
+        self._inputLeftLabel = Label(self._root, textvariable=self._inputLeftText)
+        self._inputLeftLabel.grid(column=1,row=4,sticky=N+W)
 
         self._refreshTime = int(1000 / Constants.FPS)
         self._currentFps = 0
         self._fpsCounter = 0
 
-        self._board = None
-
-    def setBoard(self, board):
-        self._board = board
+        self._board = Board()
 
     def run(self):
         self._root.after(100, self.update)
@@ -45,3 +59,12 @@ class Window(object):
         self._fpsCounter = 0
 
         self._fpsText.set("FPS: " + str(self._currentFps))
+
+    def updateBoard(self, boardState):
+        self._board.update(boardState)
+
+    def updateSessionInfo(self, sessionInfo):
+        self._inputTopText.set("TOP: " + str(sessionInfo['input'][0]))
+        self._inputRightText.set("RGH: " + str(sessionInfo['input'][1]))
+        self._inputBottomText.set("BTM: " + str(sessionInfo['input'][2]))
+        self._inputLeftText.set("LFT: " + str(sessionInfo['input'][3]))
