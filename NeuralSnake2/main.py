@@ -3,6 +3,9 @@ sys.path.append("AI")
 sys.path.append("GUI")
 sys.path.append("Helpers")
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 from window import *
 from core import *
 

@@ -20,7 +20,8 @@ class SessionsManager(Thread):
 
     def run(self):
         while self.running:
-            self._sessions[0].game.nextTurn(Direction.UP)
+            for session in self._sessions:
+                session.nextTurn()
             sleep(self._refreshInterval)
 
     def getBoardState(self, boardIndex):
