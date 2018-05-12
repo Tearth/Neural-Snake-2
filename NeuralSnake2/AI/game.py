@@ -81,6 +81,15 @@ class Game(object):
     def getSnakeLength(self):
         return len(self._body) + 1
 
+    def getSnakeEyes(self):
+        return [self.checkIfFieldIsLegal(self.boardfields[self._head.x][self._head.y - 1]),
+                self.checkIfFieldIsLegal(self.boardfields[self._head.x + 1][self._head.y]),
+                self.checkIfFieldIsLegal(self.boardfields[self._head.x][self._head.y + 1]),
+                self.checkIfFieldIsLegal(self.boardfields[self._head.x - 1][self._head.y])]
+
     def checkIfMoveIsLegal(self, nextPosition):
         field = self.boardfields[nextPosition.x][nextPosition.y]
+        return self.checkIfFieldIsLegal(field)
+
+    def checkIfFieldIsLegal(self, field):
         return field == Field.NONE or field == Field.FOOD

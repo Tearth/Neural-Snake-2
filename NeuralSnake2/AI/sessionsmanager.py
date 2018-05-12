@@ -25,7 +25,7 @@ class SessionsManager(Thread):
             sleep(self._refreshInterval)
 
     def getBoardState(self, boardIndex):
-        return self._sessions[boardIndex].game.boardfields
+        return self._sessions[boardIndex].getBoardState()
 
     def stop(self):
         self.running = False

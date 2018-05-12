@@ -4,7 +4,7 @@ from numpy import array
 
 class Session(object):
     def __init__(self):
-        self.game = Game()
+        self._game = Game()
         self.initNetwork()
 
     def initNetwork(self):
@@ -31,4 +31,20 @@ class Session(object):
         self._tfSession.run(tf.global_variables_initializer())
 
     def nextTurn(self):
-        self.game.nextTurn(Direction.UP)
+        input_values = []
+        eyes = self._game.getSnakeEyes()
+
+        for eye in eyes:
+            input_values.append(eye * 2 - 1)
+
+        input_array = array(input_values).reshape(1, 4)
+        output_values = self._tfSession.run(self._outputActivationFunction, feed_dict={self._input: input_array})[0]
+
+        direction = output_values.argmax()
+        self._game.nextTurn(Direction(direction))
+
+    def getBoardState(self):
+        return self._game.boardfields
+
+    def isRunning(self):
+        return self._game.running
