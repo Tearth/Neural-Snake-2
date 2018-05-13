@@ -12,7 +12,7 @@ class Window(object):
         self._root.resizable(False, False)
 
         self._canvas = Canvas(self._root, width=395, height=395, bg="white")
-        self._canvas.grid(column=0,row=0,sticky=N,rowspan=100)
+        self._canvas.grid(column=0,row=0,sticky=N,rowspan=50)
 
         self._fpsText = StringVar()
         self._fpsLabel = Label(self._root, textvariable=self._fpsText,anchor="center",width="25")
@@ -33,6 +33,22 @@ class Window(object):
         self._inputLeftText = StringVar()
         self._inputLeftLabel = Label(self._root, textvariable=self._inputLeftText)
         self._inputLeftLabel.grid(column=1,row=4,sticky=N+W)
+
+        self._inputFoodTopText = StringVar()
+        self._inputFoodTopLabel = Label(self._root, textvariable=self._inputFoodTopText)
+        self._inputFoodTopLabel.grid(column=1,row=5,sticky=N+W)
+
+        self._inputFoodRightText = StringVar()
+        self._inputFoodRightLabel = Label(self._root, textvariable=self._inputFoodRightText)
+        self._inputFoodRightLabel.grid(column=1,row=6,sticky=N+W)
+
+        self._inputFoodBottomText = StringVar()
+        self._inputFoodBottomLabel = Label(self._root, textvariable=self._inputFoodBottomText)
+        self._inputFoodBottomLabel.grid(column=1,row=7,sticky=N+W)
+
+        self._inputFoodLeftText = StringVar()
+        self._inputFoodLeftLabel = Label(self._root, textvariable=self._inputFoodLeftText)
+        self._inputFoodLeftLabel.grid(column=1,row=8,sticky=N+W)
 
         self._refreshTime = int(1000 / Constants.FPS)
         self._currentFps = 0
@@ -68,3 +84,8 @@ class Window(object):
         self._inputRightText.set("RGH: " + str(sessionInfo['input'][1]))
         self._inputBottomText.set("BTM: " + str(sessionInfo['input'][2]))
         self._inputLeftText.set("LFT: " + str(sessionInfo['input'][3]))
+        
+        self._inputFoodTopText.set("F_TOP: " + str(sessionInfo['input'][4]))
+        self._inputFoodRightText.set("F_RGH: " + str(sessionInfo['input'][5]))
+        self._inputFoodBottomText.set("F_BTM: " + str(sessionInfo['input'][6]))
+        self._inputFoodLeftText.set("F_LFT: " + str(sessionInfo['input'][7]))

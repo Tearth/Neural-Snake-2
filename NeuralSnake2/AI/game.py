@@ -1,4 +1,5 @@
 from copy import *
+from math import *
 from field import *
 from random import *
 from constants import *
@@ -34,6 +35,7 @@ class Game(object):
         self._body = []
         
     def initFood(self):
+        self._foods = []
         for i in range(Constants.FOOD_COUNT):
             self.addFood()
 
@@ -51,6 +53,7 @@ class Game(object):
             self.running = False
         else:
             if self.boardfields[nextPosition.x][nextPosition.y] == Field.FOOD:
+                self.removeFood(nextPosition)
                 self.addFood()
                 self._hunger = Constants.HUNGER_LIMIT
 
@@ -73,7 +76,14 @@ class Game(object):
             foodPosition = self.getRandomPosition()
             if(self.boardfields[foodPosition.x][foodPosition.y] == Field.NONE):
                 self.boardfields[foodPosition.x][foodPosition.y] = Field.FOOD
+                self._foods.append(foodPosition)
                 foodPositionFound = True
+
+    def removeFood(self, foodPosition):
+        for food in self._foods:
+            if(food == foodPosition):
+                self._foods.remove(food)
+                break;
 
     def getRandomPosition(self):
         return vector2d(randint(1, Constants.BOARD_WIDTH - 2), randint(1, Constants.BOARD_HEIGHT - 2))
@@ -86,6 +96,23 @@ class Game(object):
                 self.checkIfFieldIsLegal(self.boardfields[self._head.x + 1][self._head.y]),
                 self.checkIfFieldIsLegal(self.boardfields[self._head.x][self._head.y + 1]),
                 self.checkIfFieldIsLegal(self.boardfields[self._head.x - 1][self._head.y])]
+
+    def getNearestFoodDirection(self):
+        nearestFood = None
+        nearestFoodDistance = 999999
+
+        for food in self._foods:
+            dist = sqrt(pow(food.x - self._head.x, 2) + pow(food.y - self._head.y, 2))
+            if(dist < nearestFoodDistance):
+                nearestFoodDistance = dist
+                nearestFood = food
+
+        if nearestFood == None: return [False, False, False, False]
+        else:
+            return [nearestFood.y < self._head.y,
+                    nearestFood.x > self._head.x,
+                    nearestFood.y > self._head.y,
+                    nearestFood.x < self._head.x]
 
     def checkIfMoveIsLegal(self, nextPosition):
         field = self.boardfields[nextPosition.x][nextPosition.y]

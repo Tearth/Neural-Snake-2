@@ -36,11 +36,15 @@ class Session(object):
     def nextTurn(self):
         input_values = []
         eyes = self._game.getSnakeEyes()
+        nearestFood = self._game.getNearestFoodDirection()
 
         for eye in eyes:
             input_values.append(eye * 2 - 1)
 
-        input_array = array(input_values).reshape(1, 4)
+        for foodDirection in nearestFood:
+            input_values.append(foodDirection * 2 - 1)
+
+        input_array = array(input_values).reshape(1, Constants.INPUT_NEURONS_COUNT)
         output_values = self._tfSession.run(self._outputActivationFunction, feed_dict={self._input: input_array})[0]
 
         direction = output_values.argmax()
