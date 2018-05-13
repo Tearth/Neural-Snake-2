@@ -14,6 +14,7 @@ class Window(object):
         self._canvas = Canvas(self._root, width=395, height=395, bg="white")
         self._canvas.grid(column=0,row=0,sticky=N,rowspan=50)
 
+        # Input snake direction
         self._fpsText = StringVar()
         self._fpsLabel = Label(self._root, textvariable=self._fpsText,anchor="center",width="25")
         self._fpsLabel.grid(column=1,row=0,columnspan=2,sticky=N)
@@ -34,6 +35,7 @@ class Window(object):
         self._inputLeftLabel = Label(self._root, textvariable=self._inputLeftText)
         self._inputLeftLabel.grid(column=1,row=4,sticky=N+W)
 
+        # Input nearest food direction
         self._inputFoodTopText = StringVar()
         self._inputFoodTopLabel = Label(self._root, textvariable=self._inputFoodTopText)
         self._inputFoodTopLabel.grid(column=1,row=5,sticky=N+W)
@@ -49,6 +51,23 @@ class Window(object):
         self._inputFoodLeftText = StringVar()
         self._inputFoodLeftLabel = Label(self._root, textvariable=self._inputFoodLeftText)
         self._inputFoodLeftLabel.grid(column=1,row=8,sticky=N+W)
+
+        # Output snake direction
+        self._outputTopText = StringVar()
+        self._outputTopLabel = Label(self._root, textvariable=self._outputTopText)
+        self._outputTopLabel.grid(column=2,row=1,sticky=N+W)
+
+        self._outputRightText = StringVar()
+        self._outputRightLabel = Label(self._root, textvariable=self._outputRightText)
+        self._outputRightLabel.grid(column=2,row=2,sticky=N+W)
+
+        self._outputBottomText = StringVar()
+        self._outputBottomLabel = Label(self._root, textvariable=self._outputBottomText)
+        self._outputBottomLabel.grid(column=2,row=3,sticky=N+W)
+
+        self._outputLeftText = StringVar()
+        self._outputLeftLabel = Label(self._root, textvariable=self._outputLeftText)
+        self._outputLeftLabel.grid(column=2,row=4,sticky=N+W)
 
         self._refreshTime = int(1000 / Constants.FPS)
         self._currentFps = 0
@@ -89,3 +108,8 @@ class Window(object):
         self._inputFoodRightText.set("F_RGH: " + str(sessionInfo['input'][5]))
         self._inputFoodBottomText.set("F_BTM: " + str(sessionInfo['input'][6]))
         self._inputFoodLeftText.set("F_LFT: " + str(sessionInfo['input'][7]))
+        
+        self._outputTopText.set("O_TOP: " + "{:.3f}".format(sessionInfo['output'][0]))
+        self._outputRightText.set("O_RGH: " + "{:.3f}".format(sessionInfo['output'][1]))
+        self._outputBottomText.set("O_BTM: " + "{:.3f}".format(sessionInfo['output'][2]))
+        self._outputLeftText.set("O_LFT: " + "{:.3f}".format(sessionInfo['output'][3]))
