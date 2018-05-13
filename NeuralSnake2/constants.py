@@ -15,3 +15,4 @@ class Constants(object):
     OUTPUT_NEURONS_COUNT = 4
 
     GENE_RESOLUTION = 16
+    MUTATION_RATIO = 100
