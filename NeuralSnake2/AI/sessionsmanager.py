@@ -3,6 +3,7 @@ from threading import *
 from session import *
 from constants import *
 from direction import *
+from genotypeoperators import *
 
 class SessionsManager(Thread):
     def __init__(self):
@@ -22,6 +23,9 @@ class SessionsManager(Thread):
         while self.running:
             for session in self._sessions:
                 session.nextTurn()
+                if not session.isRunning():
+                    GenotypeOperators.breed(self._sessions[0].genotype, self._sessions[1].genotype)
+
             sleep(self._refreshInterval)
 
     def getBoardState(self, boardIndex):

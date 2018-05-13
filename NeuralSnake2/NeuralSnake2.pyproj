@@ -24,6 +24,9 @@
     <Compile Include="AI\game.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AI\genotypeoperators.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="AI\session.py">
       <SubType>Code</SubType>
     </Compile>

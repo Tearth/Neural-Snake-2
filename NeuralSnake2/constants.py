@@ -4,7 +4,7 @@ class Constants(object):
 
     FPS = 30
 
-    SESSIONS_COUNT = 1
+    SESSIONS_COUNT = 10
     SESSION_REFRESH_INTERVAL = 250
 
     FOOD_COUNT = 1
@@ -13,3 +13,5 @@ class Constants(object):
     INPUT_NEURONS_COUNT = 8
     HIDDEN_NEURONS_COUNT = 8
     OUTPUT_NEURONS_COUNT = 4
+
+    GENE_RESOLUTION = 16
