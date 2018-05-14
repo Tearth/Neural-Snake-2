@@ -12,7 +12,7 @@ class Session(object):
         self._input =  tf.placeholder("float", [None, Constants.INPUT_NEURONS_COUNT],  name="input_data")
         self._output = tf.placeholder("float", [None, Constants.OUTPUT_NEURONS_COUNT], name="output_data")
         
-        self._lastInput = [0] * Constant.INPUT_NEURONS_COUNT
+        self._lastInput = [0] * Constants.INPUT_NEURONS_COUNT
         self._lastOutput = [0] * Constants.OUTPUT_NEURONS_COUNT
         
         if genotype == None:
@@ -59,7 +59,7 @@ class Session(object):
         return self._game.running
 
     def getScore(self):
-        return self._game.getSnakeLength()
+        return (50 * self._game.getSnakeLength()) + self._game.age
 
     def _initWeightAndBiases(self):
         self.genotype = [0] * self._getGenotypeLength()

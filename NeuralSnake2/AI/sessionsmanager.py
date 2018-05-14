@@ -21,23 +21,34 @@ class SessionsManager(Thread):
 
     def run(self):
         while self.running:
+            do_next_generation = True
             for session in self._sessions:
                 session.nextTurn()
-                if not session.isRunning():
+                if(session.isRunning()):
+                    do_next_generation = False
+
+            if do_next_generation:
+                new_sessions = []
+                sum = 0
+                best = 0
+
+                for session in self._sessions:
                     self._sessions = sorted(self._sessions, key=lambda x: x.getScore(), reverse=True)
-                    first_parent_index = randint(0, 1)
-                    second_parent_index = randint(first_parent_index + 1, 3)
+                    first_parent_index = randint(0, 5)
+                    second_parent_index = randint(0, 5)
+
+                    best = max(best, session.getScore())
+                    sum += session.getScore()
 
                     first_parent = self._sessions[first_parent_index]
                     second_parent = self._sessions[second_parent_index]
 
-                    self._sessions.remove(session)
-
                     genome = GenotypeOperators.breed(first_parent.genotype, second_parent.genotype)
                     genome_after_mutation = GenotypeOperators.mutate(genome)
 
-                    self._sessions.append(Session(genome))
-
+                    new_sessions.append(Session(genome_after_mutation))
+                self._sessions = new_sessions
+                print("Avg: {0}\tMax: {1}".format(sum/len(new_sessions), best))
             sleep(self._refreshInterval)
 
     def getBoardState(self, boardIndex):

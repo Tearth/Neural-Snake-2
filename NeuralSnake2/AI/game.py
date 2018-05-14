@@ -9,6 +9,7 @@ from direction import *
 class Game(object):
     def __init__(self):
         self.running = True
+        self.age = 0
         self._hunger = Constants.HUNGER_LIMIT
 
         self.boardfields = [Field.NONE] * Constants.BOARD_WIDTH
@@ -69,6 +70,7 @@ class Game(object):
 
             self.boardfields[nextPosition.x][nextPosition.y] = Field.HEAD
             self._head = nextPosition
+            self.age += 1
 
     def addFood(self):
         foodPositionFound = False
