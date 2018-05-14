@@ -9,22 +9,25 @@ class Session(object):
         self.initNetwork(genotype)
 
     def initNetwork(self, genotype = None):
-        self._input =  tf.placeholder("float", [None, Constants.INPUT_NEURONS_COUNT],  name="input_data")
-        self._output = tf.placeholder("float", [None, Constants.OUTPUT_NEURONS_COUNT], name="output_data")
-        
-        self._lastInput = [0] * Constants.INPUT_NEURONS_COUNT
-        self._lastOutput = [0] * Constants.OUTPUT_NEURONS_COUNT
-        
-        if genotype == None:
-            self._initWeightAndBiases()
-        else:
-            self._initWeightAndBiasesWithGenotype(genotype)
+        self._graph = tf.Graph()
+        with self._graph.as_default():
 
-        self._inputActivationFunction  = tf.nn.tanh((tf.matmul(self._input,                    self._weights['input_weights'])  + self._biases['input_biases']),  name="input_act_func")
-        self._hiddenActivationFunction = tf.nn.tanh((tf.matmul(self._inputActivationFunction,  self._weights['hidden_weights']) + self._biases['hidden_biases']), name="hidden_act_func")
-        self._outputActivationFunction = tf.nn.tanh((tf.matmul(self._hiddenActivationFunction, self._weights['output_weights']) + self._biases['output_biases']), name="output_act_func")
+            self._input =  tf.placeholder("float", [None, Constants.INPUT_NEURONS_COUNT],  name="input_data")
+            self._output = tf.placeholder("float", [None, Constants.OUTPUT_NEURONS_COUNT], name="output_data")
+        
+            self._lastInput = [0] * Constants.INPUT_NEURONS_COUNT
+            self._lastOutput = [0] * Constants.OUTPUT_NEURONS_COUNT
+        
+            if genotype == None:
+                self._initWeightAndBiases()
+            else:
+                self._initWeightAndBiasesWithGenotype(genotype)
 
-        self._tfSession = tf.Session()
+            self._inputActivationFunction  = tf.nn.tanh((tf.matmul(self._input,                    self._weights['input_weights'])  + self._biases['input_biases']),  name="input_act_func")
+            self._hiddenActivationFunction = tf.nn.tanh((tf.matmul(self._inputActivationFunction,  self._weights['hidden_weights']) + self._biases['hidden_biases']), name="hidden_act_func")
+            self._outputActivationFunction = tf.nn.tanh((tf.matmul(self._hiddenActivationFunction, self._weights['output_weights']) + self._biases['output_biases']), name="output_act_func")
+
+        self._tfSession = tf.Session(graph=self._graph)
 
     def nextTurn(self):
         input_values = []

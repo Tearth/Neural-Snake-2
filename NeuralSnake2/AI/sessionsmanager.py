@@ -29,26 +29,33 @@ class SessionsManager(Thread):
 
             if do_next_generation:
                 new_sessions = []
-                sum = 0
                 best = 0
+                sum = 0
+                
+                sorted_sessions = self._sessions
+                
+                best_games = sorted_sessions[0:Constants.BEST_GAMES_BREED_COUNT]
 
-                for session in self._sessions:
-                    self._sessions = sorted(self._sessions, key=lambda x: x.getScore(), reverse=True)
-                    first_parent_index = randint(0, 5)
-                    second_parent_index = randint(0, 5)
+                for i in range(Constants.RANDOM_GAMES_BREED_COUNT):
+                    best_games.append(sorted_sessions[randint(Constants.BEST_GAMES_BREED_COUNT, len(sorted_sessions) - 1)])
+
+                for session in best_games:
+                    first_parent_index = randint(0, len(best_games) - 1)
+                    second_parent_index = randint(0, len(best_games) - 1)
 
                     best = max(best, session.getScore())
                     sum += session.getScore()
 
-                    first_parent = self._sessions[first_parent_index]
-                    second_parent = self._sessions[second_parent_index]
+                    first_parent = best_games[first_parent_index]
+                    second_parent = best_games[second_parent_index]
 
                     genome = GenotypeOperators.breed(first_parent.genotype, second_parent.genotype)
                     genome_after_mutation = GenotypeOperators.mutate(genome)
 
                     new_sessions.append(Session(genome_after_mutation))
                 self._sessions = new_sessions
-                print("Avg: {0}\tMax: {1}".format(sum/len(new_sessions), best))
+
+                print("Avg: {0}\tMax: {1}".format(sum/len(self._sessions), best))
             sleep(self._refreshInterval)
 
     def getBoardState(self, boardIndex):
