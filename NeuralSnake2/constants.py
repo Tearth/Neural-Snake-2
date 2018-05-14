@@ -5,9 +5,9 @@ class Constants(object):
     FPS = 30
 
     SESSIONS_COUNT = 10
-    SESSION_REFRESH_INTERVAL = 250
+    SESSION_REFRESH_INTERVAL = 0
 
-    FOOD_COUNT = 1
+    FOOD_COUNT = 15
     HUNGER_LIMIT = 50
 
     INPUT_NEURONS_COUNT = 8
@@ -15,4 +15,4 @@ class Constants(object):
     OUTPUT_NEURONS_COUNT = 4
 
     GENE_RESOLUTION = 16
-    MUTATION_RATIO = 100
+    MUTATION_RATIO = 5

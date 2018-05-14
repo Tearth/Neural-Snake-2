@@ -20,7 +20,7 @@ class GenotypeOperators(object):
                     gene |= right_gene & pow(2, bit)
 
             genotype.append(gene / max_value - 1)
-        return GenotypeOperators.mutate(genotype)
+        return genotype
 
     @staticmethod
     def mutate(genotype):
@@ -33,6 +33,7 @@ class GenotypeOperators(object):
                 gene_to_mutate  = int((genotype[i] + 1) * max_value)
                 bit_index = randint(0, Constants.GENE_RESOLUTION - 1)
                 gene = gene_to_mutate ^ (1 << bit_index)
+                gene = gene / max_value - 1
 
-            mutated_genotype.append(gene / max_value - 1)
+            mutated_genotype.append(gene)
         return mutated_genotype

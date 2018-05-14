@@ -4,16 +4,16 @@ from game import *
 from numpy import array
 
 class Session(object):
-    def __init__(self):
+    def __init__(self, genotype = None):
         self._game = Game()
-        self.initNetwork()
+        self.initNetwork(genotype)
 
     def initNetwork(self, genotype = None):
         self._input =  tf.placeholder("float", [None, Constants.INPUT_NEURONS_COUNT],  name="input_data")
         self._output = tf.placeholder("float", [None, Constants.OUTPUT_NEURONS_COUNT], name="output_data")
         
-        self._lastInput = []
-        self._lastOutput = []
+        self._lastInput = [0] * Constant.INPUT_NEURONS_COUNT
+        self._lastOutput = [0] * Constants.OUTPUT_NEURONS_COUNT
         
         if genotype == None:
             self._initWeightAndBiases()
@@ -58,6 +58,9 @@ class Session(object):
     def isRunning(self):
         return self._game.running
 
+    def getScore(self):
+        return self._game.getSnakeLength()
+
     def _initWeightAndBiases(self):
         self.genotype = [0] * self._getGenotypeLength()
         for i in range(len(self.genotype)):
@@ -78,22 +81,22 @@ class Session(object):
             'output_biases': tf.Variable(tf.zeros([Constants.OUTPUT_NEURONS_COUNT]), name="output_biases")
         }
 
-        input_weights = self.genotype[0:Constants.INPUT_NEURONS_COUNT * Constants.INPUT_NEURONS_COUNT]
+        input_weights = genotype[0:Constants.INPUT_NEURONS_COUNT * Constants.INPUT_NEURONS_COUNT]
         length = len(input_weights)
 
-        hidden_weights = self.genotype[length:length + Constants.INPUT_NEURONS_COUNT * Constants.HIDDEN_NEURONS_COUNT]
+        hidden_weights = genotype[length:length + Constants.INPUT_NEURONS_COUNT * Constants.HIDDEN_NEURONS_COUNT]
         length += len(hidden_weights)
 
-        output_weights = self.genotype[length:length + Constants.HIDDEN_NEURONS_COUNT * Constants.OUTPUT_NEURONS_COUNT]
+        output_weights = genotype[length:length + Constants.HIDDEN_NEURONS_COUNT * Constants.OUTPUT_NEURONS_COUNT]
         length += len(output_weights)
 
-        input_biases = self.genotype[length:length + Constants.INPUT_NEURONS_COUNT]
+        input_biases = genotype[length:length + Constants.INPUT_NEURONS_COUNT]
         length += len(input_biases)
 
-        hidden_biases = self.genotype[length:length + Constants.HIDDEN_NEURONS_COUNT]
+        hidden_biases = genotype[length:length + Constants.HIDDEN_NEURONS_COUNT]
         length += len(hidden_biases)
 
-        output_biases = self.genotype[length:length + Constants.OUTPUT_NEURONS_COUNT]
+        output_biases = genotype[length:length + Constants.OUTPUT_NEURONS_COUNT]
         length += len(output_biases)
 
         self._weights['input_weights'] = tf.assign(self._weights['input_weights'], array(input_weights).reshape(Constants.INPUT_NEURONS_COUNT, Constants.INPUT_NEURONS_COUNT))
@@ -103,6 +106,8 @@ class Session(object):
         self._biases['input_biases'] = tf.assign(self._biases['input_biases'], input_biases)
         self._biases['hidden_biases'] = tf.assign(self._biases['hidden_biases'], hidden_biases)
         self._biases['output_biases'] = tf.assign(self._biases['output_biases'], output_biases)
+
+        self.genotype = genotype
 
     def _getGenotypeLength(self):
         return (Constants.INPUT_NEURONS_COUNT * Constants.INPUT_NEURONS_COUNT) + \
