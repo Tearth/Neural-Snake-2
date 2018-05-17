@@ -27,7 +27,7 @@ class Session(object):
             self._hiddenActivationFunction = tf.nn.tanh((tf.matmul(self._inputActivationFunction,  self._weights['hidden_weights']) + self._biases['hidden_biases']), name="hidden_act_func")
             self._outputActivationFunction = tf.nn.tanh((tf.matmul(self._hiddenActivationFunction, self._weights['output_weights']) + self._biases['output_biases']), name="output_act_func")
 
-        self._tfSession = tf.Session(graph=self._graph)
+            self._tfSession = tf.Session(graph=self._graph)
 
     def nextTurn(self):
         input_values = []

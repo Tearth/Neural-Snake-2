@@ -8,6 +8,7 @@ from direction import *
 
 class Game(object):
     def __init__(self):
+        self._seed = seed
         self.running = True
         self.age = 0
         self._hunger = Constants.HUNGER_LIMIT

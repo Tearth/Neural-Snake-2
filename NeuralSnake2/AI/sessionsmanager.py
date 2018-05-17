@@ -39,7 +39,7 @@ class SessionsManager(Thread):
                 for i in range(Constants.RANDOM_GAMES_BREED_COUNT):
                     best_games.append(sorted_sessions[randint(Constants.BEST_GAMES_BREED_COUNT, len(sorted_sessions) - 1)])
 
-                for session in best_games:
+                for session in self._sessions:
                     first_parent_index = randint(0, len(best_games) - 1)
                     second_parent_index = randint(0, len(best_games) - 1)
 

@@ -29,7 +29,7 @@ class GenotypeOperators(object):
 
         for i in range(len(genotype)):
             gene = genotype[i]
-            if(randint(0, 100 - Constants.MUTATION_RATIO) == 0):
+            if(randint(0, 100) < Constants.MUTATION_RATIO):
                 gene_to_mutate  = int((genotype[i] + 1) * max_value)
                 bit_index = randint(0, Constants.GENE_RESOLUTION - 1)
                 gene = gene_to_mutate ^ (1 << bit_index)
