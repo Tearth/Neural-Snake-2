@@ -8,7 +8,7 @@ class Window(object):
         self._slowMode = False
 
         self._root = Tk()
-        self._root.title("NeuralNetwork 2")
+        self._root.title("NeuralSnake 2")
         self._root.geometry("600x400")
         self._root.resizable(False, False)
 
