@@ -6,6 +6,7 @@ from numpy import array
 class Session(object):
     def __init__(self, genotype = None):
         self._game = Game()
+        self._score = 0
         self.initNetwork(genotype)
 
     def initNetwork(self, genotype = None):
@@ -62,7 +63,11 @@ class Session(object):
         return self._game.running
 
     def getScore(self):
-        return (50 * self._game.getSnakeLength()) + self._game.age
+        return self._score
+
+    def restartGame(self):
+        self._score += (50 * self._game.getSnakeLength()) + self._game.age
+        self._game = Game()
 
     def _initWeightAndBiases(self):
         self.genotype = [0] * self._getGenotypeLength()

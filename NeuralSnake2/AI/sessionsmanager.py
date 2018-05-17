@@ -12,6 +12,8 @@ class SessionsManager(Thread):
         self._refreshInterval = Constants.SESSION_REFRESH_INTERVAL / 1000
         self._sessions = []
         self.running = True
+        self._generationsCount = 0
+        self._gamesCount = 0
 
         self.createInitialSessions()
     
@@ -28,34 +30,40 @@ class SessionsManager(Thread):
                     do_next_generation = False
 
             if do_next_generation:
-                new_sessions = []
-                best = 0
-                sum = 0
+                if self._gamesCount < Constants.GAMES_PER_GENERATION:
+                    for session in self._sessions:
+                        session.restartGame()
+                    self._gamesCount += 1
+                else:
+                    new_sessions = []
+                    best = 0
+                    sum = 0
                 
-                sorted_sessions = self._sessions
-                
-                best_games = sorted_sessions[0:Constants.BEST_GAMES_BREED_COUNT]
+                    sorted_sessions = sorted(self._sessions, key=lambda x: x._score, reverse=True)
+                    best_games = sorted_sessions[0:Constants.BEST_GAMES_BREED_COUNT]
 
-                for i in range(Constants.RANDOM_GAMES_BREED_COUNT):
-                    best_games.append(sorted_sessions[randint(Constants.BEST_GAMES_BREED_COUNT, len(sorted_sessions) - 1)])
+                    for i in range(Constants.RANDOM_GAMES_BREED_COUNT):
+                        best_games.append(sorted_sessions[randint(Constants.BEST_GAMES_BREED_COUNT, len(sorted_sessions) - 1)])
 
-                for session in self._sessions:
-                    first_parent_index = randint(0, len(best_games) - 1)
-                    second_parent_index = randint(0, len(best_games) - 1)
+                    for session in self._sessions:
+                        first_parent_index = randint(0, len(best_games) - 1)
+                        second_parent_index = randint(0, len(best_games) - 1)
 
-                    best = max(best, session.getScore())
-                    sum += session.getScore()
+                        best = max(best, session.getScore())
+                        sum += session.getScore()
 
-                    first_parent = best_games[first_parent_index]
-                    second_parent = best_games[second_parent_index]
+                        first_parent = best_games[first_parent_index]
+                        second_parent = best_games[second_parent_index]
 
-                    genome = GenotypeOperators.breed(first_parent.genotype, second_parent.genotype)
-                    genome_after_mutation = GenotypeOperators.mutate(genome)
+                        genome = GenotypeOperators.breed(first_parent.genotype, second_parent.genotype)
+                        genome_after_mutation = GenotypeOperators.mutate(genome)
 
-                    new_sessions.append(Session(genome_after_mutation))
-                self._sessions = new_sessions
+                        new_sessions.append(Session(genome_after_mutation))
+                    self._sessions = new_sessions
+                    self._generationsCount += 1
+                    self._gamesCount = 0
 
-                print("Avg: {0}\tMax: {1}".format(sum/len(self._sessions), best))
+                    print("Avg: {0}\tMax: {1}\tGen: {2}:".format(sum/len(self._sessions), best, self._generationsCount))
             sleep(self._refreshInterval)
 
     def getBoardState(self, boardIndex):
