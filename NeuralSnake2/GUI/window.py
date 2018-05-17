@@ -5,6 +5,7 @@ from constants import *
 
 class Window(object):
     def __init__(self):
+        self._slowMode = False
 
         self._root = Tk()
         self._root.title("NeuralNetwork 2")
@@ -69,7 +70,10 @@ class Window(object):
         self._outputLeftLabel = Label(self._root, textvariable=self._outputLeftText)
         self._outputLeftLabel.grid(column=2,row=4,sticky=N+W)
 
-        self._refreshTime = int(1000 / Constants.FPS)
+        # Mode button
+        self._button = Button(self._root, text="Fast/Slow", command=self.modeButtonClicked)
+        self._button.grid(column=1,row=9,columnspan=2)
+
         self._currentFps = 0
         self._fpsCounter = 0
 
@@ -81,7 +85,7 @@ class Window(object):
         self._root.mainloop()
         
     def update(self):
-        self._root.after(self._refreshTime, self.update)
+        self._root.after(int(1000 / Constants.FPS), self.update)
         self._fpsCounter += 1
 
         if(self._board != None):
@@ -113,3 +117,13 @@ class Window(object):
         self._outputRightText.set("O_RGH: " + "{:.3f}".format(sessionInfo['output'][1]))
         self._outputBottomText.set("O_BTM: " + "{:.3f}".format(sessionInfo['output'][2]))
         self._outputLeftText.set("O_LFT: " + "{:.3f}".format(sessionInfo['output'][3]))
+
+    def modeButtonClicked(self):
+        if self._slowMode:
+            Constants.FPS = 3
+            Constants.SESSION_REFRESH_INTERVAL = 0
+            self._slowMode = False
+        else:
+            Constants.FPS = 30
+            Constants.SESSION_REFRESH_INTERVAL = 250
+            self._slowMode = True

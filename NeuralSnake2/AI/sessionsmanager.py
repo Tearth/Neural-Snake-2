@@ -9,7 +9,6 @@ class SessionsManager(Thread):
     def __init__(self):
         super().__init__()
 
-        self._refreshInterval = Constants.SESSION_REFRESH_INTERVAL / 1000
         self._sessions = []
         self.running = True
         self._generationsCount = 0
@@ -64,7 +63,7 @@ class SessionsManager(Thread):
                     self._gamesCount = 0
 
                     print("Avg: {0}\tMax: {1}\tGen: {2}:".format(sum/len(self._sessions), best, self._generationsCount))
-            sleep(self._refreshInterval)
+            sleep(Constants.SESSION_REFRESH_INTERVAL / 1000)
 
     def getBoardState(self, boardIndex):
         return self._sessions[boardIndex].getBoardState()
