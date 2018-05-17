@@ -8,7 +8,7 @@ class Constants(object):
     SESSION_REFRESH_INTERVAL = 0
 
     FOOD_COUNT = 1
-    HUNGER_LIMIT = 15
+    HUNGER_LIMIT = 30
 
     INPUT_NEURONS_COUNT = 8
     HIDDEN_NEURONS_COUNT = 12
