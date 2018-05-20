@@ -28,7 +28,8 @@ class Session(object):
             self._hiddenActivationFunction = tf.nn.tanh((tf.matmul(self._inputActivationFunction,  self._weights['hidden_weights']) + self._biases['hidden_biases']), name="hidden_act_func")
             self._outputActivationFunction = tf.nn.tanh((tf.matmul(self._hiddenActivationFunction, self._weights['output_weights']) + self._biases['output_biases']), name="output_act_func")
 
-            self._tfSession = tf.Session(graph=self._graph)
+            gpuConfig = tf.ConfigProto(device_count = {'GPU': 0})
+            self._tfSession = tf.Session(graph=self._graph,config=gpuConfig)
 
     def nextTurn(self):
         input_values = []
@@ -42,6 +43,7 @@ class Session(object):
             input_values.append(foodDirection * 2 - 1)
 
         input_array = array(input_values).reshape(1, Constants.INPUT_NEURONS_COUNT)
+
         output_values = self._tfSession.run(self._outputActivationFunction, feed_dict={self._input: input_array})[0]
 
         direction = output_values.argmax()
